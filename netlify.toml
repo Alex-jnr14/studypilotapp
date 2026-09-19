@@ -1,0 +1,20 @@
+[build]
+  command = "rm -rf buildsrc dist functions /tmp/studypilot.zip && mkdir -p buildsrc dist functions && base64 -d StudyPilot-Web-v7.zip.b64 > /tmp/studypilot.zip && unzip -q /tmp/studypilot.zip -d buildsrc && cp -a buildsrc/. dist/ && rm -rf dist/netlify && cp -a buildsrc/netlify/functions/. functions/"
+  publish = "dist"
+  functions = "functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(self), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
